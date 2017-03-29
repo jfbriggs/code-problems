@@ -8,36 +8,23 @@
 // Step 4: Keep repeating until midpoint lands on target value
 
 var binarySearch = function(array, target, left, right) {
-  // create a left pointer
-  // create a right pointer
-  // set a midpoint index variable
   left = left || 0;
   right = right || array.length - 1;
   var midIndex = Math.floor((left + right) / 2);
 
-  // BASE CASE: if the midpoint value is the target
   if (array[midIndex] === target) {
-    // return the midpoint index variable
     return midIndex;
   }
 
-  // BASE CASE 2: if left and right are the same index and not the target value, the target doesn't exist
   if (left === right) {
     return -1;
   }
 
-  // if the target value is less than the midpoint value
   if (target < array[midIndex]) {
-    // set right to midpoint - 1
     right = midIndex - 1;
-  } else {  // otherwise (if it's greater)
-    // set left to the current midpoint index + 1
+  } else {
     left = midIndex + 1;
   }
 
-  // then re-run binarySearch (with a return)
   return binarySearch(array, target, left, right);
-
 }
-
-console.log(binarySearch([1, 2, 5, 7, 9, 11, 20, 38, 44, 51, 59, 80], 5));
