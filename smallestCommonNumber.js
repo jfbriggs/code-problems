@@ -8,28 +8,31 @@ var smallestCommon = function(a1, a2, a3) {
     return a.length - b.length;
   });
 
+  // create a variable to represent the shortest array
+  var first = arrays[0];
+  // create a variable (object) that is key-value pairs of elements in second array
+  var second = arrays[1].reduce(function(obj, element) {
+    obj[element] = element;
+    return obj;
+  }, {});
+  // create a variable (object) that is key value pairs of elements in third array
+  var third = arrays[2].reduce(function(obj, element) {
+    obj[element] = element;
+    return obj;
+  }, {});
+
   // variable to represent lowest common number (starts at null)
   var lowestCommon = null;
   // iterate through first array
-  for (var i = 0; i < arrays[0].length; i++) {
+  for (var i = 0; i < first.length; i++) {
     // if the lowest common num value is null OR if the current element is less than the current lowest common num value
-    if (lowestCommon === null || arrays[0][i] < lowestCommon) {
-      // iterate through second array
-      for (var j = 0; j < arrays[1].length; j++) {
-        // if current element in second array is the same as the current element in first array
-        if (arrays[1][j] === arrays[0][i]) {
-          // iterate through third array
-          for (var k = 0; k < arrays[2].length; k++) {
-            // if current element in third array is the same as current in second
-            if (arrays[2][k] === arrays[1][j]) {
-              // set the lowest common num value to the current value in third
-              lowestCommon = arrays[2][k];
-              // break out of third loop
-              break;
-            }
-          }
-          // break out of second loop
-          break;
+    if (lowestCommon === null || first[i] < lowestCommon) {
+      // if the current value exists in second
+      if (second[first[i]]) {
+        // if the current value exists in third
+        if (third[first[i]]) {
+          // set lowestCommon to the current element
+          lowestCommon = first[i];
         }
       }
     }
