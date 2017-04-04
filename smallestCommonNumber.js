@@ -2,21 +2,16 @@
 
 
 var smallestCommon = function(a1, a2, a3) {
-  var arrays = Array.prototype.slice.call(arguments);
-
-  arrays.sort(function(a, b) {
-    return a.length - b.length;
-  });
 
   // create a variable to represent the shortest array
-  var first = arrays[0];
+  var first = a1;
   // create a variable (object) that is key-value pairs of elements in second array
-  var second = arrays[1].reduce(function(obj, element) {
+  var second = a2.reduce(function(obj, element) {
     obj[element] = element;
     return obj;
   }, {});
   // create a variable (object) that is key value pairs of elements in third array
-  var third = arrays[2].reduce(function(obj, element) {
+  var third = a3.reduce(function(obj, element) {
     obj[element] = element;
     return obj;
   }, {});
@@ -44,6 +39,3 @@ var smallestCommon = function(a1, a2, a3) {
 
 
 console.log(smallestCommon([3, 1, 8, 9, 2, 3, 1, 4, 7], [4, 0, 9, 2], [10, 15, 3, 1, 9, 4]));
-
-
-
