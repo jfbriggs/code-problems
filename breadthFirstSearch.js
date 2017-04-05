@@ -18,29 +18,26 @@ Logic:
 
 var breadthFirstSearch = function(root, target) {
   
-  // create current level array with root in it
-  var currentLevel = [root];
-  // create empty next level array
-  var nextLevel = [];
-  // begin our primary iteration (while)
-  while (currentLevel.length > 0) {
-    // iterate through current level
-    for (var i = 0; i < currentLevel.length; i++) {
-      // if the current node's value is the target
-      if (currentLevel[i].value === target) {
-        // return true
-        return true;
-      }
-      // if not, iterate through its children, adding them to next level array
-      currentLevel[i].children.forEach(function(child) {
-        nextLevel.push(child);
-      });
-    }
+  // create nodex array with root in it
+  var nodes = [root];
+  // create an iterator value
+  var i = 0;
 
-    // set current level array to what next level array is
-    currentLevel = nextLevel;
-    // set next level array to empty
-    nextLevel = [];
+  // begin our primary iteration (while)
+  while (i < nodes.length) {
+    // if the value of the current node (according to the iterator) in our nodes array is the target
+    if (nodes[i].value === target) {
+      // output true and end
+      return true;
+    }
+    // iterate through current node's children
+    nodes[i].children.forEach(function(child) {
+      // add each one to nodes array
+      nodes.push(child);
+    });
+
+    // increment iterator
+    i++;
   }
 
   // if we make it all the way through, just output false
@@ -70,4 +67,4 @@ b.addChild(d);
 b.addChild(e);
 c.addChild(f);
 c.addChild(g);
-console.log(breadthFirstSearch(a, 11));
+console.log(breadthFirstSearch(a, 9));
