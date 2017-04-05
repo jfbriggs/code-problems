@@ -23,13 +23,7 @@ var levelOrderTraversal = function(root) {
   var currentLevel = [root];
   var nextLevel = [];
   // inner function
-  var traverseLevel = function() {
-    // BASE CASE: if current level array is empty
-    if (currentLevel.length === 0) {
-      // break out
-      return;
-    }
-
+  while (currentLevel.length > 0) {
     var levelValues = [];
 
     // iterate through current level array
@@ -48,12 +42,8 @@ var levelOrderTraversal = function(root) {
     currentLevel = nextLevel;
     // set next level array to empty
     nextLevel = [];
-    // reinvoke inner function
-    traverseLevel();
   }
 
-  // initial invocation of inner function
-  traverseLevel();
   // output result array
   return result;
 }
