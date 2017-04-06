@@ -21,16 +21,12 @@ Logic:
 */
 
 var merge = function(left, right) {
-  // create an empty result array
   var result = [];
-  // while left and right still have elements
+
   while (left.length > 0 && right.length > 0) {
-    // if first element in left is less than the first element in right
     if (left[0] <= right[0]) {
-      // remove the first element from left and add it to the result array
       result.push(left.shift());
-    } else { // otherwise (if first in right is less than first element in left)
-      // remove first element from right and add it to result array
+    } else {
       result.push(right.shift());
     }
   }
@@ -43,26 +39,17 @@ var merge = function(left, right) {
     result.push(right.shift());
   }
 
-  // output the result array
   return result;
 }
 
 var mergeSort = function(array) {
-  console.log(array);
-  // BASE CASE: if array has just one element in it, just return it
   if (array.length === 1) {
     return array;
   }
-  // create a midpoint variable
+
   var midpoint = Math.floor(array.length / 2);
-  // create a left half array based on midpoint
   var left = array.slice(0, midpoint);
-  // create a right half array based on midpoint
   var right = array.slice(midpoint, array.length)
-  // invoke merge, passing in an invocation of mergeSort on left and an invocation of mergeSort on right (with a return)
   return merge(mergeSort(left), mergeSort(right));
 
 }
-
-var arr = [3, 10, 2, 1, 5, 6, 4, 9, 7, 11, 21, 8];
-console.log(mergeSort(arr));
