@@ -51,5 +51,4 @@ var mergeSort = function(array) {
   var left = array.slice(0, midpoint);
   var right = array.slice(midpoint, array.length)
   return merge(mergeSort(left), mergeSort(right));
-
 }
