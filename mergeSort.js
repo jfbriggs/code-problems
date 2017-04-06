@@ -20,63 +20,48 @@ Logic:
   - Re-run process again on merged arrays
 */
 
-
-var mergeSort = function(array) {
-  // empty array to hold series of single-element arrays
-  var elementsAsArrays = [];
-  // iterate through input array, pushing each element as a single-element array to the above container array
-  array.forEach(function(element) {
-    elementsAsArrays.push([element]);
-  });
-
-  // inner function to merge two arrays together in sorted order
-  var merge = function(arr) {
-    // BASE CASE: if the length of the passed in collection is 1, just return that first element
-    if (arr.length === 1) {
-      return arr[0];
+var merge = function(left, right) {
+  // create an empty result array
+  var result = [];
+  // while left and right still have elements
+  while (left.length > 0 && right.length > 0) {
+    // if first element in left is less than the first element in right
+    if (left[0] <= right[0]) {
+      // remove the first element from left and add it to the result array
+      result.push(left.shift());
+    } else { // otherwise (if first in right is less than first element in left)
+      // remove first element from right and add it to result array
+      result.push(right.shift());
     }
-    // create an empty array to contain merged subarrays
-    var allMergedArrays = [];
-    // iterate through series of subarrays, iterating by 2 each time
-    for (var i = 0; i < arr.length; i += 2) {
-      // if current subarray is the last element in containing array
-      if (i === arr.length - 1) {
-        // just add it to above merged subarray container
-        allMergedArrays.push(arr[i]);
-      } else { // otherwise...
-        // empty array to contain elements added in sorted order
-        var mergedArrayPair = [];
-        // create iterator variable for the first subarray (set to 0)
-        // create iterator variable for the second subarray (set to 0)
-        // create variables to simplify representation of the two subarrays we're working with
-        var j = 0, k = 0, first = arr[i], second = arr[i + 1];
-        // iteration:  while first iterator variable value is less than first subarray length and second iterator var is less than second subarray length
-        while (j < first.length || k < second.length) {
-          // if the current element in second subarray doesn't exist OR if current element in first subarray is less than current element in second
-          if (k === second.length || first[j] < second[k]) {
-            // add the current element in first subarray to above container array
-            mergedArrayPair.push(first[j]);
-            // increment first iterator
-            j++;
-          // if the current element in first subarray doesn't exist or if current element in second subarray is less than current element in first
-          } else if (j === first.length || second[k] < first[j]) {
-            // add the current element in second subarray to above container array
-            mergedArrayPair.push(second[k]);
-            // increment second iterator
-            k++;
-          }
-        }
-        // once done with combining of two subarrays, add result merged array to merged array container
-        allMergedArrays.push(mergedArrayPair);
-      }
-    }
-
-    // once iterating through original set of subarrays is complete, re-run inner function on new collection of subarrays
-    return merge(allMergedArrays);
   }
 
-  // invoke our inner function for first time (with a return)
-  return merge(elementsAsArrays);
+  while (left.length > 0) {
+    result.push(left.shift());
+  }
+
+  while (right.length > 0) {
+    result.push(right.shift());
+  }
+
+  // output the result array
+  return result;
+}
+
+var mergeSort = function(array) {
+  console.log(array);
+  // BASE CASE: if array has just one element in it, just return it
+  if (array.length === 1) {
+    return array;
+  }
+  // create a midpoint variable
+  var midpoint = Math.floor(array.length / 2);
+  // create a left half array based on midpoint
+  var left = array.slice(0, midpoint);
+  // create a right half array based on midpoint
+  var right = array.slice(midpoint, array.length)
+  // invoke merge, passing in an invocation of mergeSort on left and an invocation of mergeSort on right (with a return)
+  return merge(mergeSort(left), mergeSort(right));
+
 }
 
 var arr = [3, 10, 2, 1, 5, 6, 4, 9, 7, 11, 21, 8];
