@@ -13,32 +13,21 @@ Logic:
 */
 
 var insertionSort = function(array) {
-  // iterate forward through array, starting at index 1
   for (var i = 0; i < array.length; i++) {
-    // create variable to represent the value of current element
     var current = array[i];
-    // iterate backward, starting at current index - 1
     for (var j = i - 1; j >= 0; j--) {
-      // if current backward iteration element is greater than current forward iteration element
       if (array[j] > current) {
-        // make element at next index (compared to where we are in backward iteration) the current backward iteration element value
         array[j + 1] = array[j];
-        // if current index in backward iteration is 0
         if (j === 0) {
-          // make the first element in the array the current forward iteration element
           array[0] = current;
-          // and break out of iteration
           break;
         }  
-      } else { // otherwise
-        // make element at next index (compared to where we are in backward iteration) the current forward iteration element value
+      } else {
         array[j + 1] = current;
-        // and break out of iteration
         break;
       }
     }
   }
 
-  // output the array in its sorted form
   return array;
 }
