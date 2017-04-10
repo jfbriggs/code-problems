@@ -13,7 +13,7 @@ Logic:
 
 var mirrorNodes = function(root) {
   var swapChildren = function(node) {
-    if (!node.left && !node.right) {
+    if (!node || (!node.left && !node.right)) {
       return;
     }
 
@@ -21,13 +21,8 @@ var mirrorNodes = function(root) {
     node.left = node.right;
     node.right = temp;
 
-    if (node.left) {
-      swapChildren(node.left);
-    }
-
-    if (node.right) {
-      swapChildren(node.right);
-    }
+    swapChildren(node.left);
+    swapChildren(node.right);
   }
 
   swapChildren(root);
