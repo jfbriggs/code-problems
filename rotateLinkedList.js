@@ -15,21 +15,36 @@ Logic:
 */
 
 var rotateLinkedList = function(node, n) {
-  // variables to represent first pointer & second pointer, both point to head node to start
-  var first = node, second = node;
-  // countdown variable, starts at n
+  // variable to represent length of linkedlist
+  var length = 1;
+  // variable to represent steps remaining (relative to n, count down)
   var stepsRemaining = n;
   // variable to represent new head once iteration is finished
   var newHead;
-  // while the "next" value of the node that the first pointer references is not null
-  while (first.next !== null) {
-    // move first pointer to next node
-    first = first.next;
-    // if countdown variable is 0, move second pointer to its next node too, otherwise decrement stepsRemaining
-    if (stepsRemaining === 0) {
-      second = second.next;
-    } else {
-      stepsRemaining--;
+
+  // while stepsRemaining is greater than 0
+  while (stepsRemaining > 0) {
+    // variables to represent first pointer & second pointer, both point to head node to start
+    var first = node, second = node;
+    // while the "next" value of the node that the first pointer references is not null
+    while (first.next !== null) {
+      // move first pointer to next node and increment length
+      first = first.next;
+      length++;
+      // if countdown variable is 0, move second pointer to its next node too, otherwise decrement stepsRemaining
+      if (stepsRemaining === 0) {
+        second = second.next;
+      } else {
+        stepsRemaining--;
+      }
+    }
+
+    // if we get to last node and stepsRemaining is still greater than 0
+    if (stepsRemaining > 0) {
+      // get the remainder of stepsRemaining divided by list length
+      var minSteps = stepsRemaining % length - 1;
+      // and set stepsRemaining to that value
+      stepsRemaining = minSteps;      
     }
   }
 
@@ -68,5 +83,3 @@ d.pointTo(e);
 e.pointTo(f);
 f.pointTo(g);
 g.pointTo(h);
-
-console.log(JSON.stringify(rotateLinkedList(a, 5)));
