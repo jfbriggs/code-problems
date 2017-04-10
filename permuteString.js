@@ -34,13 +34,11 @@ var permuteString = function(string) {
   return result;
 }
 
-// replace character function for string
 var replaceAt = function(string, index, char) {
   return string.substring(0, index) + char + string.substring(index + 1, string.length);
 }
 
 var createSubstring = function(string, index) {
-  // temp variable to represent first index value
   if (index !== 0) {
     var temp = string[0];
     string = replaceAt(string, 0, string[index]);
@@ -48,5 +46,3 @@ var createSubstring = function(string, index) {
   }
   return string.substring(1, string.length);
 }
-
-console.log(permuteString('draw'));
