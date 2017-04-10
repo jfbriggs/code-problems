@@ -31,7 +31,7 @@ var heapify = function(array, i, n) {
     var temp = array[i];
     array[i] = array[max];
     array[max] = temp;
-    heapify(array, max);
+    heapify(array, max, n);
   }
 };
 
