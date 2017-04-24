@@ -16,47 +16,66 @@ LOGIC:
 */
 
 var quicksort = function(array) {
-  
-  var partialSort = function(left, right) {
 
-    if (left === right) {
+  var orgByPivot = function(left, right) {
+    console.log(left, right);
+    // BASE CASE: if left and right are the same value
+    if (left >= right) {
+      // break out
       return;
     }
 
+    // set pivot to what right is
     var pivot = right;
+    // set right to right - 1
     right = right - 1;
+    // set originalRight to what pivot is
+    // set originalLeft to what left is
+    var origRight = pivot, origLeft = left;
 
-    var originalLeft = left, originalRight = right;
-
+    // while left and right are not the same value
     while (left !== right) {
+      
+      // if value at left is less than or equal to value at pivot
       if (array[left] <= array[pivot]) {
+        // increment left
         left++;
-      } else {
-        while (array[right] > array[pivot] && right > left) {
-          right++;
+      } else {  // otherwise (if value at left is greater than value at pivot)
+        // if value at right is greater than value at pivot
+        if (array[right] > array[pivot]) {
+          // decrement right
+          right--;
+        } else { // otherwise
+          // swap values at left and right
+          var temp = array[left];
+          array[left] = array[right];
+          array[right] = temp;          
         }
-        if (left === right) {
-          break;
-        } else {
-          var temp = array[right];
-          array[right] = array[left];
-          array[left] = temp;
-        } 
       }
+
     }
 
+    console.log(array);
+    console.log(left, right);
+
+    // if value at convergence point is greater than pivot element
     if (array[left] > array[pivot]) {
+      // swap them
       var temp = array[left];
       array[left] = array[pivot];
-      array[pivot] = temp;
-      partialSort(originalLeft, left - 1);
-      partialSort(left + 1, originalRight);
+      array[pivot] = temp;      
+      // re-invoke inner function on subarray to left of convergence index
+      orgByPivot(origLeft, left - 1);
+      // re-invoke inner function on subarray to right of convergence index
+      orgByPivot(left + 1, origRight);
     } else {
-      partialSort(originalLeft, originalRight);
+      orgByPivot(origLeft, pivot - 1);
     }
+
+
   }
 
-  partialSort(0, array.length - 1);
-
+  orgByPivot(0, array.length - 1);
+  
   return array;
 }
