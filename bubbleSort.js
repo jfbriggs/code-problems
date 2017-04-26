@@ -14,23 +14,40 @@ ENDING CONDITIONS:
 */
 
 var bubbleSort = function(array) {
-  var endIndex = array.length - 1;
-  var swapsInPrior = true;
+  // variable to represent whether any swaps happened in the prior iteration (true by default)
+  var swapped = true;
 
-  while (endIndex > 0 && swapsInPrior === true) {
-    swapsInPrior = false;
+  var iterate = function(lastIndex) {
+    // BASE CASE: if swapped variable is false, or last Index is 0
+    if (!swapped || lastIndex === 0) {
+      // break out
+      return;
+    }
 
-    for (var i = 0; i <= endIndex; i++) {
+    // set swapped variable to false
+    swapped = false;
+    // iterate forward through array
+    for (var i = 0; i < lastIndex; i++) {
+      // if current element in iteration is greater than the next element
       if (array[i] > array[i + 1]) {
+        // swap them
         var temp = array[i];
         array[i] = array[i + 1];
         array[i + 1] = temp;
-        swapsInPrior = true;
+        // set swapped variable to true
+        swapped = true;
       }
+
     }
 
-    endIndex--;
+    // re-invoke iterate function with lastIndex being 1 less than it currently is
+    iterate(lastIndex - 1);
   }
 
+  // invoke iterate for first time
+  iterate(array.length - 1);
+
+  // output the array
   return array;
+
 }
