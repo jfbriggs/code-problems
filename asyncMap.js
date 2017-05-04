@@ -42,31 +42,20 @@
  */
 
 var asyncMap = function(tasks, cb) {
-  // create a results array
   var results = [];
-  // create a variable to represent how many functions have completed executing
   var completed = 0;
 
-  // inner function to invoke a func from tasks list (accepts function and index)
   var runTask = function(task, i) {
-    // invoke the function, pass in callback which accepts a value
     task(function(value) {
-      // add the value to results array at associated index
       results[i] = value;
-      // increment completed value
       completed++;
-      // if completed value matches original task list length
       if (completed === tasks.length) {
-        // invoke the final callback on results array
         cb(results);
       }
     });
   }
 
-  // iterate through array of functions ("tasks") (for loop with iterator "i")
   for (var i = 0; i < tasks.length; i++) {
-    // run the runTask function on the current function
     runTask(tasks[i], i);
   }
-
 }
