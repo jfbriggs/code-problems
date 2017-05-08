@@ -42,7 +42,8 @@ LOGIC:
 
 -  iterate through counts object
   - each iteration, add current key/value pair as a subarray to front of resulting array
-  - bubblesort style, iterate forward with new pair, swapping as necessary, until it's in place
+
+- sort resulting array: descending by frequency, then ascending by letter if necessary
 
  */
 
@@ -61,24 +62,23 @@ var characterFrequency = function(string) {
   }
 
   for (char in frequencies) {
-    frequencyList.unshift([char, frequencies[char]]);
-    frequencyList = sortForward(frequencyList);
+    frequencyList.push([char, frequencies[char]]);
   }
+
+  frequencyList.sort(function(a, b) {
+    if (a[1] > b[1]) {
+      return -1;
+    }
+    if (a[1] < b[1]) {
+      return 1;
+    }
+    if (a[0] < b[0]) {
+      return -1;
+    }
+    if (a[0] > b[0]) {
+      return 1;
+    }
+  });
 
   return frequencyList;
 };
-
-var sortForward = function(freqs) {
-  if (freqs.length > 1) {
-    var newIndex = 0;
-
-    while (freqs[newIndex][1] > freqs[newIndex + 1][1] || (freqs[newIndex][1] === freqs[newIndex + 1][1] && freqs[newIndex][0].charCodeAt(0) > freqs[newIndex + 1][0].charCodeAt(0))) {
-      var temp = freqs[newIndex];
-      freqs[newIndex] = freqs[newIndex + 1];
-      freqs[newIndex + 1] = temp;
-      newIndex++;    
-    }
-  }
-
-  return freqs;
-}
