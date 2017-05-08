@@ -42,20 +42,21 @@
  */
 
 var asyncMap = function(tasks, cb) {
+  // create result array
   var results = [];
+  // variable to represent how many tasks have completed
   var completed = 0;
-
-  var runTask = function(task, i) {
-    task(function(value) {
-      results[i] = value;
-      completed++;
-      if (completed === tasks.length) {
-        cb(results);
-      }
-    });
-  }
-
+  // iterate through the array of tasks
   for (var i = 0; i < tasks.length; i++) {
-    runTask(tasks[i], i);
+    // invoke tasks, passing in a function which a) adds the string to result array, and b) checks if all tasks are complete
+    tasks[i](function(data) {
+      results[i] = data;
+      completed++;
+      // if all tasks are complete 
+      if (completed === tasks.length) {
+        // invoke cb on the result array
+        cb(results);
+      }      
+    });
   }
 }
