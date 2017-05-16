@@ -35,15 +35,20 @@ LOGIC:
 */
 
 var mixEvents = function(obj) {
-  obj.events = {};
+  var events = {};
 
   obj.on = function(event, cb) {
-    obj.events.event = cb;
+    events.event = events.event || [];
+    events.event.push(cb);
   }
 
   obj.trigger = function(event) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    obj.events.event.apply(null, args);
+    if (events.event) {
+      var args = Array.prototype.slice.call(arguments, 1);
+      events.event.forEach(function(func) {
+        func.apply(null, args);
+      });
+    }
   }
 
   return obj;
